@@ -1,2 +1,2 @@
 My sample flask web app for testing purposes.
-Created this app with of the ChatGPT.
+Created this app with help of the ChatGPT.
