@@ -1,3 +1,20 @@
 name: 'Deploy of the web-server'
 on:
   workflow_dispatch:
+jobs:
+  built:
+
+    name: Run on Ubuntu
+    runs-on: ubuntu-22.04
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        # This is the version of the action for setting up Python, not the Python version.
+        uses: actions/setup-python@v5
+        with:
+          # Semantic version range syntax or exact version of a Python version
+          python-version: '3.7-slim'
+      # You can test your matrix by printing the current Python version
+      - name: Display Python version
+        run: python -c "import sys; print(sys.version)"
