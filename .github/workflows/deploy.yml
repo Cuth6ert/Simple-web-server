@@ -41,10 +41,9 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v1
 
       #сборка и пуш образа
-      - name: Build and Push
-        id: build-push
-        uses: aws-actions/amazon-ecr-push@v1
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v2
         with:
-          repository: 670293731208.dkr.ecr.us-east-1.amazonaws.com/web-server:latest
+          context: .
           push: true
-          tags: latest
+          tags: ${{ steps.login-ecr.outputs.registry }}/your-repo-name:tag
