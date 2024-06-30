@@ -45,6 +45,6 @@ jobs:
         id: build-push
         uses: aws-actions/amazon-ecr-push@v1
         with:
-          repository: 670293731208.dkr.ecr.us-east-1.amazonaws.com/web-server
+          repository: 670293731208.dkr.ecr.us-east-1.amazonaws.com/web-server:latest
           push: true
           tags: latest
