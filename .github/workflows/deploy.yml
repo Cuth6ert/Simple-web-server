@@ -2,19 +2,49 @@ name: 'Deploy of the web-server'
 on:
   workflow_dispatch:
 jobs:
-  built:
+  build:
 
     name: Run on Ubuntu
     runs-on: ubuntu-22.04
 
+    permissions:
+      id-token: write
+      contents: read
+
     steps:
       - uses: actions/checkout@v4
       - name: Set up Python
-        # This is the version of the action for setting up Python, not the Python version.
+        # Конфигурация Python
         uses: actions/setup-python@v5
         with:
-          # Semantic version range syntax or exact version of a Python version
+          # Установка версии Python
           python-version: '3.7'
-      # You can test your matrix by printing the current Python version
+      
+      
+      # Показывать какая версия Python установлена    
       - name: Display Python version
         run: python -c "import sys; print(sys.version)"
+      
+
+      #настройка AWS credentials с сервисами GitHub
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-central-1
+
+
+      #вход в Amazon ECR
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
+      #сборка и пуш образа
+      - name: Build and Push
+        id: build-push
+        uses: aws-actions/amazon-ecr-push@v1
+        with:
+          repository: web-server
+          push: true
+          tags: latest
