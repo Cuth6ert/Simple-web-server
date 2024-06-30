@@ -44,6 +44,6 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v2
         with:
-          context: ./DOCKERFILE
+          context: .
           push: true
           tags: ${{ steps.login-ecr.outputs.registry }}/web-server:latest
